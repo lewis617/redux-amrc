@@ -17,7 +17,7 @@ export const initialState = {
   loadState: {},
 };
 
-export function reducer(state = initialState, action) {
+function reducer(state = initialState, action) {
   switch (action.type) {
     case LOAD:
       return {
