@@ -3,6 +3,8 @@
 [![NPM Version](https://img.shields.io/npm/v/redux-amrc.svg?style=flat)](https://www.npmjs.com/package/redux-amrc)
 [![Build Status](https://travis-ci.org/lewis617/redux-amrc.svg?branch=master)](https://travis-ci.org/lewis617/redux-amrc)
 [![codecov](https://codecov.io/gh/lewis617/redux-amrc/branch/master/graph/badge.svg)](https://codecov.io/gh/lewis617/redux-amrc)
+[![npm](https://img.shields.io/npm/dm/localeval.svg?maxAge=2592000)](redux-amrc)
+[![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](redux-amrc)
 
 This package wil help you dispatch async action with less boilerplate.
 
@@ -43,7 +45,7 @@ import { ASYNC } from 'redux-amrc';
 
 /**
  * This actionCreator will create LOAD and LOAD_SUCCESS,
- * state.async[key] will be 'success'
+ * state.async.[key] will be 'success'
  */
 function success() {
   return {
