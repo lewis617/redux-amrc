@@ -1,0 +1,42 @@
+{
+  "name": "redux-amrc",
+  "version": "1.0.0",
+  "description": "Redux async middleware and reducer creator",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "mocha --recursive --compilers js:babel-register",
+    "test:watch": "npm test -- --watch",
+    "test:cov": "nyc --reporter=lcov --reporter=text npm test && codecov",
+    "lint": "eslint src/*",
+    "build": "rimraf lib && babel src -d lib",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lewis617/redux-amrc.git"
+  },
+  "author": "lewis617",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lewis617/redux-amrc/issues"
+  },
+  "homepage": "https://github.com/lewis617/redux-amrc#readme",
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-eslint": "^6.1.2",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.14.0",
+    "codecov": "^1.0.1",
+    "eslint": "^3.5.0",
+    "expect": "^1.20.2",
+    "mocha": "^3.0.2",
+    "nyc": "^8.3.0",
+    "redux": "^3.6.0",
+    "redux-mock-store": "^1.2.0",
+    "rimraf": "^2.5.4"
+  }
+}
