@@ -94,6 +94,9 @@ function fail() {
   
 * `reducerCreator`: Function => Reducer
     * `reducers`(Option): Object
+    
+> `reducers` is same as `reducers` in `combineReducers(reducers)`, it is used
+to update data in `state.async.[key]`.
 
 ## License
 
