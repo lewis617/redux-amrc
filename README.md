@@ -6,7 +6,7 @@
 [![npm](https://img.shields.io/npm/dm/redux-amrc.svg?maxAge=2592000)](redux-amrc)
 [![npm](https://img.shields.io/npm/l/redux-amrc.svg?maxAge=2592000)](redux-amrc)
 
-This package wil help you dispatch async action with less boilerplate.
+This package will help you dispatch async action with less boilerplate.
 
 ## Install
 
