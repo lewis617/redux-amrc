@@ -15,6 +15,12 @@ export default store => next => action => {
     throw new Error('Specify one of the promise');
   }
 
+  const p = promise(store);
+
+  if(!p || typeof p.then !== 'function'){
+    throw new Error('promise() must return Promise');
+  }
+
   next(load(key));
 
   return promise(store)
