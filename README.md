@@ -70,6 +70,74 @@ function fail() {
 }
 ```
 
+If you want to add some code after async, you can just do this:
+
+```
+dispatch(success())
+  .then((action) => {
+    console.log(action); // { payload: { data: 'success', key: 'key' }, type: '@async/LOAD_SUCCESS' }
+  });
+
+dispatch(fail())
+  .then((action) => {
+    console.log(action); // { payload: { error: 'fail', key: 'key' }, type: '@async/LOAD_FAIL' }
+  });
+```
+
+If you want to add some code before async, you should write another action creator, because one function should do one thing.
+
+```
+function loadData() {
+  return {
+    [ASYNC]: {
+      key: 'data',
+      promise: () => fetch('/api/data')
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText);
+          }
+          return res.json();
+        })
+    }
+  };
+}
+
+function loadDataIfNeeded() {
+  return (dispatch, getState) => {
+    if (!getState().async.data) {
+      dispatch(loadData())
+    }
+  };
+}
+
+```
+
+If you want to update data in in `state.async.[key]` with your own action and reducer, you should add `reducers` to `reducerCreator(reducers)`, `reducers` in `reducerCreator(reducers)` is same as `reducers` in `combineReducers(reducers)`:
+
+```
+// your own action type
+const TOGGLE = 'TOGGLE';
+
+// your own reducer
+function keyReducer(state, action) {
+  switch (action.type) {
+    case TOGGLE:
+      return state === 'success' ? 'fail' : 'success';
+    default:
+      return state
+  }
+
+}
+
+// add reducers to reducerCreator
+reducer = reducerCreator({
+  key: keyReducer
+});
+
+// This will toggle data in `state.async.key`
+dispatch({ type: TOGGLE }); 
+```
+
 ## Action and state
 
 * action
@@ -91,14 +159,11 @@ function fail() {
 
 * `[ASYNC]`
     * `key`: String
-    * `promise`: Function => Promise
+    * `promise(store)`: Function => Promise
         * `store`(Option): Object
   
-* `reducerCreator`: Function => Reducer
+* `reducerCreator(reducers)`: Function => Reducer
     * `reducers`(Option): Object
-    
-> `reducers` is same as `reducers` in `combineReducers(reducers)`, it is used
-to update data in `state.async.[key]`.
 
 ## License
 

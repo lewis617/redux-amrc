@@ -41,16 +41,16 @@ function noPromise(val) {
   }
 }
 
-
 describe('Async actions test', () => {
-  it('Success should create Load and LOAD_SUCCESS actions', () => {
+  it('Success should create Load and LOAD_SUCCESS actions and return Promise', () => {
     const expectedActions = [
       load('key'),
       loadSuccess('key', 'success')
     ];
     const store = mockStore();
     return store.dispatch(success())
-      .then(() => {
+      .then((action) => {
+        expect(action).toEqual({ payload: { data: 'success', key: 'key' }, type: '@async/LOAD_SUCCESS' });
         expect(store.getActions()).toEqual(expectedActions);
       });
   });
@@ -61,7 +61,8 @@ describe('Async actions test', () => {
     ];
     const store = mockStore();
     return store.dispatch(fail())
-      .then(() => {
+      .then((action) => {
+        expect(action).toEqual({ payload: { error: 'fail', key: 'key' }, type: '@async/LOAD_FAIL' });
         expect(store.getActions()).toEqual(expectedActions);
       });
   });
