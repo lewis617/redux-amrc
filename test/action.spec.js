@@ -67,10 +67,12 @@ describe('Async actions test', () => {
       });
   });
   it('promise shouldn\'t return no-Promise', () => {
+    const expectedActions = [];
     const store = mockStore();
     try {
-      store.dispatch(noPromise('str'))
+      store.dispatch(noPromise('str'));
     } catch (error) {
+      expect(store.getActions()).toEqual(expectedActions);
       expect(error.toString()).toEqual('Error: promise() must return Promise');
     }
   });
