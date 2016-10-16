@@ -144,8 +144,10 @@ function keyReducer(state, action) {
 }
 
 // add reducers to reducerCreator
-reducer = reducerCreator({
-  key: keyReducer
+const rootReducer = combineReducers({
+  async: reducerCreator({
+    key: keyReducer
+  })
 });
 
 // This will toggle data in `state.async.key`
