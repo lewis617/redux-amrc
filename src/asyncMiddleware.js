@@ -23,7 +23,7 @@ export default store => next => action => {
 
   next(load(key));
 
-  return promise(store)
+  return p
     .then(data => next(loadSuccess(key, data)))
     .catch(error => next(loadFail(key, error.toString())));
 };
