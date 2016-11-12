@@ -41,6 +41,16 @@ function noPromise(val) {
   }
 }
 
+function once() {
+  return {
+    [ASYNC]: {
+      key: 'once',
+      promise: () => Promise.resolve('once'),
+      once: true
+    }
+  }
+}
+
 describe('Async actions test', () => {
   it('Success should create Load and LOAD_SUCCESS actions and return Promise', () => {
     const expectedActions = [
@@ -75,5 +85,24 @@ describe('Async actions test', () => {
       expect(store.getActions()).toEqual(expectedActions);
       expect(error.toString()).toEqual('Error: promise() must return Promise');
     }
+  });
+  it('once should create Load and LOAD_SUCCESS actions if not state.async.loadState.once.loaded', () => {
+    const expectedActions = [
+      load('once'),
+      loadSuccess('once', 'once')
+    ];
+    const store = mockStore({ async: { loadState: { once: { loaded: false } } } });
+    return store.dispatch(once())
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+  it('once shouldn\'t create Load and LOAD_SUCCESS actions if state.async.loadState.once.loaded', () => {
+    const expectedActions = [];
+    const store = mockStore({ async: { loadState: { once: { loaded: true } } } });
+    return store.dispatch(once())
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
   });
 });

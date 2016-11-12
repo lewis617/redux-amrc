@@ -5,10 +5,16 @@ export default store => next => action => {
   if (typeof action[ASYNC] === 'undefined') {
     return next(action);
   }
-  const { key, promise } = action[ASYNC];
+  const { key, promise, once } = action[ASYNC];
+
+  const state = store.getState();
+
+  if (once && state.async && state.async.loadState && state.async.loadState[key].loaded) {
+    return Promise.resolve('No need to load ' + key);
+  }
 
   if (typeof key !== 'string') {
-    throw new Error('Specify a string key.');
+    throw new Error('Specify a string key');
   }
 
   if (!promise) {
@@ -17,7 +23,7 @@ export default store => next => action => {
 
   const p = promise(store);
 
-  if(!p || typeof p.then !== 'function'){
+  if (!p || typeof p.then !== 'function') {
     throw new Error('promise() must return Promise');
   }
 
