@@ -5,11 +5,12 @@ export default store => next => action => {
   if (typeof action[ASYNC] === 'undefined') {
     return next(action);
   }
+
   const { key, promise, once } = action[ASYNC];
 
   const state = store.getState();
 
-  if (once && state.async && state.async.loadState && state.async.loadState[key].loaded) {
+  if (once && state.async && state.async.loadState && state.async.loadState[key] && state.async.loadState[key].loaded) {
     return Promise.resolve('No need to load ' + key);
   }
 

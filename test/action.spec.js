@@ -86,12 +86,23 @@ describe('Async actions test', () => {
       expect(error.toString()).toEqual('Error: promise() must return Promise');
     }
   });
-  it('once should create Load and LOAD_SUCCESS actions if not state.async.loadState.once.loaded', () => {
+  it('once should create Load and LOAD_SUCCESS actions if state = { async: {} }', () => {
     const expectedActions = [
       load('once'),
       loadSuccess('once', 'once')
     ];
-    const store = mockStore({ async: { loadState: { once: { loaded: false } } } });
+    const store = mockStore({ async: {} });
+    return store.dispatch(once())
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+  it('once should create Load and LOAD_SUCCESS actions if state = { async: { loadState: {} } }', () => {
+    const expectedActions = [
+      load('once'),
+      loadSuccess('once', 'once')
+    ];
+    const store = mockStore({ async: { loadState: {} } });
     return store.dispatch(once())
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
