@@ -127,6 +127,25 @@ function loadDataIfNeeded() {
 
 </code></pre>
 
+<p>If you don't like writing load*IfNeeded function, you can use "once" option:</p>
+
+<pre><code>function loadData() {
+  return {
+    [ASYNC]: {
+      key: 'data',
+      promise: () =&gt; fetch('/api/data')
+        .then((res) =&gt; {
+          if (!res.ok) {
+            throw new Error(res.statusText);
+          }
+          return res.json();
+        })
+      once: true
+    }
+  };
+}
+</code></pre>
+
 <p>If you want to update data in in <code>state.async.[key]</code> with your own action and reducer, you should add <code>reducers</code> to <code>reducerCreator(reducers)</code>, <code>reducers</code> in <code>reducerCreator(reducers)</code> is same as <code>reducers</code> in <code>combineReducers(reducers)</code>:</p>
 
 <pre><code>// your own action type
@@ -152,6 +171,72 @@ const rootReducer = combineReducers({
 
 // This will toggle data in `state.async.key`
 dispatch({ type: TOGGLE }); 
+</code></pre>
+
+<h2>
+<a id="how-to-test" class="anchor" href="#how-to-test" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to test</h2>
+
+<p>If your action creator is like this:</p>
+
+<pre><code>function loadData() {
+  return {
+    [ASYNC]: {
+      key: 'data',
+      promise: () =&gt; fetch('http://localhost:3000/api/data')
+        .then((res) =&gt; {
+          if (!res.ok) {
+            throw new Error(res.statusText);
+          }
+          return res.json();
+        })
+    }
+  };
+}
+</code></pre>
+
+<p>The test should be like this:</p>
+
+<pre><code>import expect from 'expect';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import { asyncMiddleware } from 'redux-amrc';
+import { load, loadSuccess } from 'redux-amrc/lib/redux';
+import nock from 'nock';
+import { loadData } from '../your_action_file';
+
+const middlewares = [thunk, asyncMiddleware];
+const mockStore = configureStore(middlewares);
+const data = { value: 'data' };
+
+function setup(state = {}) {
+  nock('http://localhost:3000')
+    .get('/api/dga')
+    .reply(200, data);
+  return mockStore(state);
+}
+
+describe('common', () =&gt; {
+  describe('redux', () =&gt; {
+    describe('data actions test', () =&gt; {
+      afterEach(() =&gt; {
+        nock.cleanAll();
+      });
+      it('loadData should create Load and LOAD_SUCCESS actions and return Promise', () =&gt; {
+        const expectedActions = [
+          load('data'),
+          loadSuccess('data', data)
+        ];
+        const store = setup();
+        return store.dispatch(loadData())
+          .then((action) =&gt; {
+            expect(action).toEqual(loadSuccess('data', data));
+            expect(store.getActions()).toEqual(expectedActions);
+          });
+      });
+    });
+  });
+});
+
 </code></pre>
 
 <h2>
