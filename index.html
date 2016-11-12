@@ -127,7 +127,7 @@ function loadDataIfNeeded() {
 
 </code></pre>
 
-<p>If you don't like writing load*IfNeeded function, you can use "once" option:</p>
+<p>If you don't like writing load*IfNeeded function, you can use "once" option to load data If Needed:</p>
 
 <pre><code>function loadData() {
   return {
@@ -215,25 +215,21 @@ function setup(state = {}) {
   return mockStore(state);
 }
 
-describe('common', () =&gt; {
-  describe('redux', () =&gt; {
-    describe('data actions test', () =&gt; {
-      afterEach(() =&gt; {
-        nock.cleanAll();
+describe('data actions test', () =&gt; {
+  afterEach(() =&gt; {
+    nock.cleanAll();
+  });
+  it('loadData should create Load and LOAD_SUCCESS actions and return Promise', () =&gt; {
+    const expectedActions = [
+      load('data'),
+      loadSuccess('data', data)
+    ];
+    const store = setup();
+    return store.dispatch(loadData())
+      .then((action) =&gt; {
+        expect(action).toEqual(loadSuccess('data', data));
+        expect(store.getActions()).toEqual(expectedActions);
       });
-      it('loadData should create Load and LOAD_SUCCESS actions and return Promise', () =&gt; {
-        const expectedActions = [
-          load('data'),
-          loadSuccess('data', data)
-        ];
-        const store = setup();
-        return store.dispatch(loadData())
-          .then((action) =&gt; {
-            expect(action).toEqual(loadSuccess('data', data));
-            expect(store.getActions()).toEqual(expectedActions);
-          });
-      });
-    });
   });
 });
 
