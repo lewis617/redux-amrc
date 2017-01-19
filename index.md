@@ -158,8 +158,7 @@ dispatch({ type: TOGGLE });
 	* `once`: 布尔类型
 	
 * `reducerCreator(reducers)`: 返回 Reducer 的函数
-
-    	* `reducers`(可选参数): 多个reducer组成的对象
+	* `reducers`(可选参数): 多个reducer组成的对象
     
     
 # English Document
