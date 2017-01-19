@@ -141,7 +141,7 @@ const rootReducer = combineReducers({
   })
 });
 
-// 发起改action将会更新 `state.async.key` 上的数据
+// 发起这个 action 将会更新 `state.async.key` 上的数据
 dispatch({ type: TOGGLE }); 
 ```
 
