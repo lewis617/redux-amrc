@@ -170,9 +170,13 @@ dispatch({ type: TOGGLE });
 
 [与React、Fetch搭配使用](https://github.com/lewis617/redux-amrc/tree/master/examples/02-use-with-fetch)：一个简单的用户界面，点击 load 按钮，该插件会帮你获取“网络请求是否正在加载”、“网络请求是否加载完成”、“网络请求得到的数据是什么”等多个异步状态。该例子的运行方法同样是 `npm start`。
 
-## Star 与 Issue
+## Star、Issue 与 Pull Request
 
-如果您觉得该插件不错，就用 [star](https://github.com/lewis617/redux-amrc) 支持一下吧！如果您在使用该插件时遇到问题，请提交 [Issue](https://github.com/lewis617/redux-amrc/issues)，我会第一时间解答您的疑问。
+如果您觉得该插件不错，就用 [star](https://github.com/lewis617/redux-amrc) 支持一下吧！
+
+如果您在使用该插件时遇到问题，请提交 [Issue](https://github.com/lewis617/redux-amrc/issues)，我会第一时间解答您的疑问。
+
+如果您发现该插件的源码、测试、文档、例子等任何方面有不足之处，欢迎 pull request。
     
 ## License
 
