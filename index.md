@@ -166,6 +166,10 @@ dispatch({ type: TOGGLE });
 [基本例子](https://github.com/lewis617/redux-amrc/tree/master/examples/01-basic)：一个最小的Node脚本，演示该插件的基本用法。`npm start`运行该程序后，观察命令行的输出，可以看到该插件帮你自动发起的action和相关的状态变化。
 
 [与React、Fetch搭配使用](https://github.com/lewis617/redux-amrc/tree/master/examples/02-use-with-fetch)：一个简单的用户界面，点击load按钮，该插件会帮你获取“网络请求是否正在加载”、“网络请求是否加载完成”、“网络请求得到的数据是什么”等多个异步状态。该例子的运行方法同样是`npm start`。
+
+## Star与Issue
+
+如果您觉得该插件不错，就用[star](https://github.com/lewis617/redux-amrc)支持一下吧！如果您在使用该插件时遇到问题，请提交[Issue](https://github.com/lewis617/redux-amrc/issues)，我会第一时间解答您的疑问。
     
 ## License
 
