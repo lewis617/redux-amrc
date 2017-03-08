@@ -22,7 +22,9 @@ npm install redux-amrc --save
 
 ## 初级用法
 
-首先，将插件提供的 `asyncMiddleware` 连接到Redux的中间件列表上。
+该插件的初级用法只有三步：
+
+第一步，将插件提供的 `asyncMiddleware` 连接到Redux的中间件列表上。
 
 store/configureStore.js
 
@@ -33,7 +35,7 @@ applyMiddleware(thunk, asyncMiddleware)
 
 ```
 
-然后，将插件提供的 `reducerCreator` 安装到 Redux 的单一状态树的 `async` 节点上。
+第二步，将插件提供的 `reducerCreator` 安装到 Redux 的单一状态树的 `async` 节点上。
 
 reducers/index.js
 
@@ -48,7 +50,7 @@ const rootReducer = combineReducers({
 export default rootReducer;
 ```
 
-最后，使用插件提供的 `ASYNC` 来标记 action 创建函数（以被中间件识别），并将要处理的异步以 Promise 的形式传递进这个 action 创建函数中。至此，异步的所有状态都将在你的掌控之中了，你可以从 Redux 单一状态树的 `state.async` 节点上获取你想要的状态。
+第三步，使用插件提供的 `ASYNC` 来标记 action 创建函数（以被中间件识别），并将异步以 Promise 的形式传递进这个 action 创建函数中。
 
 actions/index.js
 
@@ -81,13 +83,14 @@ function fail() {
   }
 }
 ```
-总结下该插件帮你发起的 action：
+
+至此，异步的所有状态都将在你的掌控之中了，当异步 Promise 被执行，该插件会自动帮你发起这些 action：
 
 * `LOAD`: 特定数据开始加载
 * `LOAD_SUCCESS`: 数据加载成功
 * `LOAD_FAIL`: 数据加载失败
 
-上述用法基本可以满足大部分场景了，因为往往我们只是发起异步获取数据而已，如果你想获取更多的异步状态，比如是否正在加载、是否加载完成，该插件也帮你提供了：
+你还可以从 Redux 单一状态树上获取你想要的异步状态，这些状态都是该插件给你自动生成的：
 
 * `state.async.[key]`: Promise 成功时返回的数据
 * `state.async.loadState.[key].loading`: 特定 key 的数据是否正在加载
@@ -163,13 +166,13 @@ dispatch({ type: TOGGLE });
     
 ## 例子
 
-[基本例子](https://github.com/lewis617/redux-amrc/tree/master/examples/01-basic)：一个最小的Node脚本，演示该插件的基本用法。`npm start`运行该程序后，观察命令行的输出，可以看到该插件帮你自动发起的action和相关的状态变化。
+[基本例子](https://github.com/lewis617/redux-amrc/tree/master/examples/01-basic)：一个最小的 Node 脚本，演示该插件的基本用法。`npm start` 运行该程序后，观察命令行的输出，可以看到该插件帮你自动发起的 action 和相关的状态变化。
 
-[与React、Fetch搭配使用](https://github.com/lewis617/redux-amrc/tree/master/examples/02-use-with-fetch)：一个简单的用户界面，点击load按钮，该插件会帮你获取“网络请求是否正在加载”、“网络请求是否加载完成”、“网络请求得到的数据是什么”等多个异步状态。该例子的运行方法同样是`npm start`。
+[与React、Fetch搭配使用](https://github.com/lewis617/redux-amrc/tree/master/examples/02-use-with-fetch)：一个简单的用户界面，点击 load 按钮，该插件会帮你获取“网络请求是否正在加载”、“网络请求是否加载完成”、“网络请求得到的数据是什么”等多个异步状态。该例子的运行方法同样是 `npm start`。
 
-## Star与Issue
+## Star 与 Issue
 
-如果您觉得该插件不错，就用[star](https://github.com/lewis617/redux-amrc)支持一下吧！如果您在使用该插件时遇到问题，请提交[Issue](https://github.com/lewis617/redux-amrc/issues)，我会第一时间解答您的疑问。
+如果您觉得该插件不错，就用 [star](https://github.com/lewis617/redux-amrc) 支持一下吧！如果您在使用该插件时遇到问题，请提交 [Issue](https://github.com/lewis617/redux-amrc/issues)，我会第一时间解答您的疑问。
     
 ## License
 
