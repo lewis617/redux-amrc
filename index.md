@@ -102,18 +102,13 @@ function fail() {
 
 如果 Redux 单一状态树上某个节点的数据已经存在，你不想重复加载，你可以使用 `once` 选项，这会帮你减少异步请求，从而节约开销，提升性能。
 
-```
+```js
 function loadData() {
   return {
     [ASYNC]: {
       key: 'data',
       promise: () => fetch('/api/data')
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(res.statusText);
-          }
-          return res.json();
-        })
+        .then(response => response.json()),
       once: true
     }
   };
@@ -122,7 +117,7 @@ function loadData() {
  
 如果你想使用自己编写的 reducer 更新该插件某个节点上的数据，比如 `state.async.[key]` 。那么你可以在插件的 `reducerCreator` 方法上添加你的 reducers。其实 `reducerCreator` 的用法和 Redux 的 `combineReducers` 是一样的，都是接受多个 reducer 组成的对象。
 
-```
+```js
 // 你自己的 action 类型
 const TOGGLE = 'TOGGLE';
 
@@ -176,7 +171,7 @@ dispatch({ type: TOGGLE });
 
 如果您在使用该插件时遇到问题，请提交 [Issue](https://github.com/lewis617/redux-amrc/issues)，我会第一时间解答您的疑问。
 
-如果您发现该插件的源码、测试、文档、例子等任何方面有不足之处，欢迎 pull request。
+如果您发现该插件的源码、测试、文档、例子等任何方面有不足之处，欢迎 [Pull Request](https://github.com/lewis617/redux-amrc/pulls)。
     
 ## License
 
